@@ -41,6 +41,7 @@ body {
     flex-direction: column;
     max-width: 300px;
     width: 50%;
+    height: 85%;
     border-radius: 10px;
     overflow: hidden;
     position: absolute;
@@ -280,9 +281,10 @@ body {
 
 @media(max-width: 600px) {
   .modal-container {
+    top: 10%;
     left: 11%;
     width: 65%;
-    height: 70%;
+    height: 60%;
   }
   .modal-title{
     font-size:15px;
