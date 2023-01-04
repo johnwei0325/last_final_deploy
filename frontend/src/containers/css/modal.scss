@@ -269,20 +269,20 @@ body {
 // //     display: none;
 // //   }
 // }
-@media(max-height: 750px) {
-  .modal-container {
-    height: 60%;
-  }
-  .modal-title{
-    font-size:10px;
-  }
-}
+//@media(max-height: 750px) {
+  //.modal-container {
+ //   height: 60%;
+ // }
+ // .modal-title{
+ //   font-size:10px;
+ // }
+//}
 
 @media(max-width: 600px) {
   .modal-container {
-    left: 22%;
-    width: 60%;
-    height: 60%;
+    left: 11%;
+    width: 65%;
+    height: 70%;
   }
   .modal-title{
     font-size:15px;
@@ -290,4 +290,5 @@ body {
   .modal-desc{
     font-size:10px;
   }
+}
 }
