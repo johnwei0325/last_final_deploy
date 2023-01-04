@@ -21,6 +21,7 @@ import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Flex } from '@chakra-ui/react'
+import useRWD from '../useRWD';
 const densityToColor = (density) => {
   if(density === 1) return 'lime';
   else if(density === 2) return 'yellow';
@@ -42,6 +43,8 @@ const NearestStations = () => {
   const [successMessage, setSuccessMessage] = useState("")
   const [spot, setSpot] = useState({lat: "", lng: "", time: ""})
   const [time_dis, setTime_Dis] = useState({dis: "", dur: ""})
+  const device=useRWD();
+
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition((position)=> {
         setPosition({lat: position.coords.latitude, lng: position.coords.longitude, time: new Date()})
@@ -99,6 +102,42 @@ const NearestStations = () => {
   const calculateRoute = (idx) => {
     console.log("hihi: ", idx, allStations[idx].label)
     setDefaultLocation(allStations[idx].location)
+  }
+
+  const mobileOrPC = (stop, index) => {
+    if(window.innerWidth>410){
+    return <>
+      <Typography
+        sx={{ display: 'inline' }}
+        component="span"
+        variant="h6"
+        color="text.primary"
+        fontSize={device==='PC' ? "20px" : "15px"}
+      >
+        Distance: &nbsp; 
+        <span style={{color: 'gray'}}> {`${Math.ceil(calcDist(position, stop.location)*1000)/1000} km`} </span>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        Spaces left: &nbsp;
+        <LocationOnIcon sx={{color: densityToColor(stop.density), fontSize: device==='PC' ? 36 : 20}}/>
+      </Typography>
+    </>
+    }else{
+    console.log('fff')
+    return <>
+    <Typography
+      sx={{ display: 'inline' }}
+      component="span"
+      variant="h6"
+      color="text.primary"
+      fontSize={"10px"}
+    >
+      Distance: &nbsp; 
+      <span style={{color: 'gray'}}> {`${Math.ceil(calcDist(position, stop.location)*1000)/1000} km`} </span>
+      Spaces left: &nbsp;
+      <LocationOnIcon sx={{color: densityToColor(stop.density), fontSize: device==='PC' ? 36 : 20}}/>
+    </Typography>
+  </>
+    }
   }
 
   const [allStations, setAllStations] = useState([]);
@@ -160,26 +199,16 @@ const NearestStations = () => {
             <>
             <ListItem alignItems="flex-start" justifyitems='center' key={stop.label} sx={{height: '130px'}} >
                 <ListItemAvatar sx={{height: '80px', width: '100px'}} onClick={()=>{ setTime_Dis(getTime_Dis(allStations[index].location)); setScroll2(true); setSelected(index); }}>
-                    <Avatar alt="Remy Sharp" src={stop.src} sx={{height: '80px', width: '80px'}}/>
+                    {/* <Avatar alt="Remy Sharp" src={stop.src} sx={{height: '80px', width: '80px'}}/> */}
+                    <img src={allStations[index].pics[0]} style={{height: '80px', width: '80px', borderRadius:"50%"}}></img>
                     {/* {EE2_Building_Southside} */}
                 </ListItemAvatar>
                 <ListItemText
                 primary={stop.label}
-                primaryTypographyProps={{variant: 'h6'}}
+                primaryTypographyProps={{variant: window.innerWidth>410 ? 'h6' : 'h8'}}
                 secondary={
                     <React.Fragment>
-                    <Typography
-                        sx={{ display: 'inline' }}
-                        component="span"
-                        variant="h6"
-                        color="text.primary"
-                    >
-                       Distance: &nbsp; 
-                       <span style={{color: 'gray'}}> {`${Math.ceil(calcDist(position, stop.location)*1000)} meters`} </span>
-                       &nbsp; &nbsp; &nbsp; &nbsp;
-                       Spaces left: &nbsp;
-                       <LocationOnIcon sx={{color: densityToColor(stop.density), fontSize: 36}}/>
-                    </Typography>
+                    {mobileOrPC(stop, index)}
                     </React.Fragment>
                 }
                 />

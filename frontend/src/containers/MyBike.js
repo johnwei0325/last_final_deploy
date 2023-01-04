@@ -174,31 +174,31 @@ function MyBike () {
             </Collapse> : <></>}
         </Box> 
         
-        <Card sx={{ maxWidth: `calc(0.8*vw)` }}>
+        <Card sx={{ maxWidth: `calc(0.8*vw)`/*`calc(0.8*vw)`*/ ,  width: window.innerWidth > 410 ? "100%" : "95%", height: window.innerWidth > 410 ? "100%" : "92%"}}>
             <CardContent>
-                <Typography gutterBottom variant="h4" component="div">
+                <Typography gutterBottom variant="h4" component="div" fontSize={window.innerWidth > 410 ? "50px" : "20px"}>
                     {username}'s Bike
                 <Button onClick={ handleGetMyBike }> Refresh </Button>
                 </Typography>
             </CardContent>
             <CardMedia
-                sx={{ height: `360px`, marginLeft: "10px", marginRight: "10px", borderRadius: "10px" }}
+                sx={{ height: window.innerWidth > 410 ? `360px` : "200px", marginLeft: "10px", marginRight: "10px", borderRadius: "10px" }}
                 image={NTU_at_night}
                 title="NTU at night"
             />
             <CardContent>
-                <Typography gutterBottom variant="h6" component="div">
+                <Typography gutterBottom variant={window.innerWidth > 410 ? "h6" : "h8"} component="div">
                     Status of My Bike: &nbsp;
                     { parked? <Chip label="Parked" color="primary" size='medium'/>
                     : <Chip label="Riding" color="secondary" size='medium'/>}
                 </Typography>
-                <Typography gutterBottom variant="h6" component="div">
+                <Typography gutterBottom variant={window.innerWidth > 410 ? "h6" : "h8"} component="div">
                     { parkLocationDB ?
                      parked? `Parked at : ${parkLocationDB}` : `Last parked at : ${parkLocationDB}`
                      : "First Time using NTU Bike!! Welcome ~~"
                     }
                 </Typography>
-                <Typography gutterBottom variant="h6" component="div">
+                <Typography gutterBottom variant={window.innerWidth > 410 ? "h6" : "h8"} component="div">
                     { parkLocationDB ?
                      parked? `Parked at ${parkTimeDB.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                       ${parkTimeDB.toLocaleTimeString(undefined)}` 
@@ -210,7 +210,7 @@ function MyBike () {
                 <Typography variant="body2" color="text.secondary">
                 
                 </Typography>
-                <br></br>
+                {window.innerWidth>410 ? <br></br> : <></>}
                 <Autocomplete
                     disablePortal
                     onInputChange={(event, newInputValue) => {
@@ -218,11 +218,11 @@ function MyBike () {
                     }}
                     id="bike-parking-spots-list"
                     options={parkingSpots}
-                    sx={{ width: 300 }}
+                    sx={{ width: window.innerWidth > 410 ?  300 : 200 }}
                     renderInput={(params) => <TextField {...params} label="Parking Spot" />}
                 />
-                <br></br>
-                <Typography gutterBottom variant="h6" component="div">
+                {window.innerWidth>410 ? <br></br> : <></>}
+                <Typography gutterBottom variant={window.innerWidth > 410 ? "h6" : "h8"} component="div">
                     How many bikes are there?
                 </Typography>
                 <Rating

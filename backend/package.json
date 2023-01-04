@@ -24,8 +24,8 @@
     "ws": "^8.11.0"
   },
   "scripts": {
-    "server": "nodemon server.js --ext js --exec babel-node",
-    "deploy": "NODE_ENV=production babel-node server.js",
+    "server": "nodemon --experimental-json-modules src/server.js --ext js --exec babel-node",
+    "deploy": "NODE_ENV=production babel-node src/server.js",
     "start":"nodemon src/index.js --ext js,graphql --exec babel-node" 
   },
   "devDependencies": {
