@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import axios from '../connection';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -22,6 +22,7 @@ import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Flex } from '@chakra-ui/react'
 import useRWD from '../useRWD';
+import { useNavigate, useLocation } from 'react-router-dom'
 const densityToColor = (density) => {
   if(density === 1) return 'lime';
   else if(density === 2) return 'yellow';
@@ -38,7 +39,7 @@ const NearestStations = () => {
   const [selected, setSelected] = useState(0);
   const [openParking, setOpenParking] = useState(false)
   const [position, setPosition] = useState({lat: null, lng: null, time: null})
-  const {defaultLocation,setDefaultLocation}=useApp();
+  const {defaultLocation,setDefaultLocation,publicErrMes, setPublicErrMes}=useApp();
   const [errorMessage,setErrorMessage ] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
   const [spot, setSpot] = useState({lat: "", lng: "", time: ""})
@@ -161,6 +162,12 @@ const NearestStations = () => {
     }
   }
 
+  const navigate = useNavigate();
+  useEffect(() => {
+        // TODO Part III-1: navigate the user to restaurant page with the corresponding id
+        if(errorMessage==="You have already parked your bike") {navigate('/My-Bike'); setPublicErrMes("You have already parked your bike")}
+  },[errorMessage])
+
   const [allStations, setAllStations] = useState([]);
 
   React.useEffect(()=>{
@@ -186,7 +193,7 @@ const NearestStations = () => {
                 }
                 sx={{ mb: 2 }}
                 >
-                {errorMessage} &nbsp; &nbsp; {errorMessage==="You have already parked your bike" ? <button className='btn-5' onClick={handleRideMyBike}>ride</button> : null}
+                {errorMessage} {/*&nbsp; &nbsp; {errorMessage==="You have already parked your bike" ? <button className='btn-5' onClick={handleRideMyBike}>ride</button> : null} */}
                 </Alert>
             </Collapse> : <></>}
             

@@ -48,13 +48,17 @@ function MyBike () {
     const [successMessage, setSuccessMessage] = useState("")
     const [successOpen, setSuccessOpen] = React.useState(true);
     const [position, setPosition] = useState({lat: null, lng: null, time: null})
-    const {me}=useApp();
+    const {me, publicErrMes, setPublicErrMes}=useApp();
     React.useEffect(() => {
         navigator.geolocation.getCurrentPosition((position)=> {
             setPosition({lat: position.coords.latitude, lng: position.coords.longitude, time: new Date()})
             console.log("selected", {lat: position.coords.latitude, lng: position.coords.longitude, time: new Date()})
         })
     },[])
+
+    React.useEffect(()=>{
+        if(publicErrMes!==""){setErrorOpen(true); setErrorMessage(publicErrMes);}
+    },[publicErrMes])
 
     const handleGetMyBike = async() => {
         const {
@@ -142,6 +146,7 @@ function MyBike () {
                     onClick={() => {
                         setErrorOpen(false);
                         setErrorMessage("");
+                        setPublicErrMes("")
                     }}
                     >
                     <CloseIcon fontSize="inherit" />

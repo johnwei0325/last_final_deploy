@@ -22,6 +22,7 @@ import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate, useLocation } from 'react-router-dom'
 const center = { lat: 48.8584, lng: 2.2945 }
 
 
@@ -49,7 +50,7 @@ function Map () {
     const [mapStyle, setMapStyle] = useState([null, mapStyle_1, mapStyle_2])
     const [countStyle, setCountStyle]= useState(0)
     const [username] = useOutletContext();
-    const {defaultLocation,setDefaultLocation}=useApp();
+    const {defaultLocation,setDefaultLocation,publicErrMes, setPublicErrMes}=useApp();
     const [errorMessage,setErrorMessage ] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
     // const [stationDist, setStationDist] = useState([])
@@ -256,6 +257,12 @@ function Map () {
       //setAllStations(stations)
     }
 
+    const navigate = useNavigate();
+    useEffect(() => {
+          // TODO Part III-1: navigate the user to restaurant page with the corresponding id
+          if(errorMessage==="You have already parked your bike") {navigate('/My-Bike'); setPublicErrMes("You have already parked your bike")}
+    },[errorMessage])
+
     if (!isLoaded) {
       return <p>error</p>
       // return <SkeletonText />
@@ -279,7 +286,7 @@ function Map () {
                 }
                 sx={{ mb: 2 }}
                 >
-                {errorMessage} &nbsp; &nbsp; {errorMessage==="You have already parked your bike" ? <button className='btn-5' onClick={handleRideMyBike}>ride</button> : null}
+                {errorMessage} {/*&nbsp; &nbsp; {errorMessage==="You have already parked your bike" ? <button className='btn-5' onClick={handleRideMyBike}>ride</button> : null} */}
                 </Alert>
             </Collapse> : <></>}
             
