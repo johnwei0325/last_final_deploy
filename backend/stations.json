@@ -17,7 +17,7 @@
     {"label": "博雅教學館",  "dist": 200, "density": 2, "pics": ["https://i.ibb.co/TL6X9ks/image.jpg",
     "https://i.ibb.co/bPV8FxW/2.jpg", "https://i.ibb.co/VWF2Xcx/4.jpg", "https://i.ibb.co/3zkb7VL/3.jpg"],
     "location":{"lat": 25.018642206612515, "lng": 121.53602989832285}},
-    {"label": "Department of Horticulture and Landscape Architecture 園藝景觀學系",  "dist": 200, "density": 5, "pics": ["https://i.ibb.co/wp74BB3/image.jpg",
+    {"label": "園藝景觀學系",  "dist": 200, "density": 5, "pics": ["https://i.ibb.co/wp74BB3/image.jpg",
     "https://i.ibb.co/KDyLyXc/2.jpg", "https://i.ibb.co/bvbBqHP/3.jpg"],
     "location":{"lat": 25.017135210723794, "lng": 121.53764691802427}},
     {"label": "學新館",  "dist": 200, "density": 3, "pics": ["https://i.ibb.co/p3rKPp0/image.png",
