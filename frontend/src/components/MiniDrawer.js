@@ -403,6 +403,18 @@ import { Link, Outlet, useNavigate, useNavigation } from "react-router-dom"
 import styledd from 'styled-components';
 import Button from '@mui/material/Button';
 import { useApp } from '../hook';
+import Modal from '@mui/material/Modal';
+const style = {
+  position: 'absolute' ,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 const drawerWidth = 240;
 const Housewrapper=styledd.div`
   position:relative;
@@ -584,7 +596,15 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-
+const densityToColor = (density) => {
+  if(density === 1) return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+  else if(density === 2) return 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+  else if(density === 3) return 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';
+  else if(density === 4) return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+  else if(density === 5) return 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
+  // else return "bike.png"
+  else return 'https://www.1stdynamicpersonnel.com/wp-content/uploads/2019/09/location_map_pin_gray5.png';
+}
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     width: drawerWidth,
@@ -608,6 +628,7 @@ export default function MiniDrawer({username,tname}) {
   const [menuSelectedIndex, setMenuSelectedIndex] = React.useState(0);
   const navigate=useNavigate();
   const {me}=useApp();
+  const [mo,setMo]=React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -621,6 +642,22 @@ export default function MiniDrawer({username,tname}) {
   };
 
   return (
+    <>
+     <Modal
+        open={mo}
+        onClose={()=>setMo(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Icon Color Meaning
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <img src={densityToColor(1)}/> :1 <img src={densityToColor(2)}/>:2 <img src={densityToColor(3)}/> :3 <img src={densityToColor(4)}/>:4 <img src={densityToColor(5)}/> :5 
+          </Typography>
+        </Box>
+      </Modal>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -716,15 +753,15 @@ export default function MiniDrawer({username,tname}) {
           ))}
         </List>
         <Divider />
-        {/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+        <List>
+            <ListItem key={'help'} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
+                onClick={()=>setMo(true)}
               >
                 <ListItemIcon
                   sx={{
@@ -733,13 +770,12 @@ export default function MiniDrawer({username,tname}) {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {<i className="fa-solid fa-circle-info"></i>}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={"help"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-          ))}
-        </List> */}
+        </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
@@ -749,5 +785,6 @@ export default function MiniDrawer({username,tname}) {
         {/* </Typography> */}
       </Box>
     </Box>
+    </>
   );
 }
