@@ -237,6 +237,25 @@ function Map () {
       else return 'https://www.1stdynamicpersonnel.com/wp-content/uploads/2019/09/location_map_pin_gray5.png';
     }
 
+    const handleRideMyBike = async() => {
+      const {
+        data: { message, myBike },
+      } = await axios.post('/myBike', {
+          username, parked: false, time: new Date(),
+      });
+      console.log("Handle post my Bike")
+      // console.log(myBike, "Is it parked? " , !parked)
+      if(!myBike){
+          setErrorMessage("Database post my bike error!")
+      } else  {
+          setSuccessMessage("Successfully updated your bike status in database.")
+          setTimeout(function () {
+              setSuccessMessage("")
+          }, 5000);//5 Second delay 
+      }
+      //setAllStations(stations)
+    }
+
     if (!isLoaded) {
       return <p>error</p>
       // return <SkeletonText />
@@ -260,7 +279,7 @@ function Map () {
                 }
                 sx={{ mb: 2 }}
                 >
-                {errorMessage}
+                {errorMessage} &nbsp; &nbsp; {errorMessage==="You have already parked your bike" ? <button className='btn-5' onClick={handleRideMyBike}>ride</button> : null}
                 </Alert>
             </Collapse> : <></>}
             

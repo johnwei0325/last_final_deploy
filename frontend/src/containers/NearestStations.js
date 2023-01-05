@@ -43,6 +43,7 @@ const NearestStations = () => {
   const [successMessage, setSuccessMessage] = useState("")
   const [spot, setSpot] = useState({lat: "", lng: "", time: ""})
   const [time_dis, setTime_Dis] = useState({dis: "", dur: ""})
+  const [username] = useOutletContext();
   const device=useRWD();
 
   React.useEffect(() => {
@@ -97,6 +98,25 @@ const NearestStations = () => {
   const calcDist = (origin, location) => {
     // if(location===undefined) return
     return Math.sqrt((location.lat-origin.lat)*111.2*111.2*(location.lat-origin.lat) + (location.lng-origin.lng)*110.8*110.8*(location.lng-origin.lng))
+  }
+
+  const handleRideMyBike = async() => {
+    const {
+      data: { message, myBike },
+    } = await axios.post('/myBike', {
+        username, parked: false, time: new Date(),
+    });
+    console.log("Handle post my Bike")
+    // console.log(myBike, "Is it parked? " , !parked)
+    if(!myBike){
+        setErrorMessage("Database post my bike error!")
+    } else  {
+        setSuccessMessage("Successfully updated your bike status in database.")
+        setTimeout(function () {
+            setSuccessMessage("")
+        }, 5000);//5 Second delay 
+    }
+    //setAllStations(stations)
   }
 
   const calculateRoute = (idx) => {
@@ -165,7 +185,7 @@ const NearestStations = () => {
                 }
                 sx={{ mb: 2 }}
                 >
-                {errorMessage}
+                {errorMessage} &nbsp; &nbsp; {errorMessage==="You have already parked your bike" ? <button className='btn-5' onClick={handleRideMyBike}>ride</button> : null}
                 </Alert>
             </Collapse> : <></>}
             

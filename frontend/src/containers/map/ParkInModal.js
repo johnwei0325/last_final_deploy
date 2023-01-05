@@ -67,6 +67,7 @@ export default function ParkInModal({openParking, setOpenParking, spot, setError
 
   const saveMyBike = async(data) => {
     console.log("saveBike: ",data)
+    if(rating===0) return
     await axios.post('/myBike', {
       // TODO Part III-3-b: store the comment to the DB
       location: {lat: data.location.lat, lng: data.location.lng},
