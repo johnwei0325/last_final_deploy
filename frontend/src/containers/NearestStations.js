@@ -147,7 +147,7 @@ const NearestStations = () => {
   },[position])
 
     return (<>
-    <Box sx={{ width: '50%', position:"fixed", left: "50%", top:"12%", transform: "translate(-50%, 0)" }}>
+    <Box sx={{width: window.innerWidth>410 ? '50%' : '80%', position:"fixed", left: window.innerWidth>410 ? "50%" : "58%", top:window.innerWidth>410 ? "12%" : "8%", transform: "translate(-50%, 0)" , zIndex: "3" }}>
       { errorMessage? <Collapse in={errorMessage}>
                 <Alert severity='error'
                 action={
