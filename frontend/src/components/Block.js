@@ -35,7 +35,7 @@ const Restaurants = (props) => {
           // image:
           //   "https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
           image:"https://i.ibb.co/6FhVX5F/stephane-mingot-e8ms-Pz-LTXx-U-unsplash.jpg",
-          title: "NEARST STATION"
+          title: "NEAREST STATION"
         },
         {
           desc: "Set your password",
