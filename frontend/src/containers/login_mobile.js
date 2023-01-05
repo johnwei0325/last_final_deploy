@@ -41,6 +41,15 @@ const MAp=styled.p`
 	color:#fff;
 	font-size:20px;
 `
+const alert={
+	'':'',
+	's':"Email duplicate!",
+	'sn':"Name cannot be empty!",
+	'se':"Email cannot be empty!",
+	'sp':"Password cannot be empty!",
+	'sps':"Password must be at least 6 characters long!",
+	
+}
 const TOKEN_KEY ='token';
 const Login_mobile=()=>{
     const [inup,setInup]=useState(false);
@@ -77,6 +86,7 @@ const Login_mobile=()=>{
 		e.preventDefault();
 		// handlelogin(email,password);
 		try{
+			setLoading(true);
 			const {data:{user,token}}=await api.post('/users/login',{email,password})
 			if(token){
 				localStorage.setItem(TOKEN_KEY,token);
@@ -86,18 +96,29 @@ const Login_mobile=()=>{
 				console.log(user);
 			}
 		}catch(e){
-			setErr('l')
+			setErr('l');
 		}
+		setLoading(false);
+
 	}
 	const handlesubmits=async(e)=>{
 		e.preventDefault();
 		// handlesignup(names,emails,passwords);
+		if(!names) setErr('sn');
+		else if(!emails) setErr('se');
+		else if(!passwords)setErr('sp');
+		else if(passwords.length<6) setErr('sps');
+		else{
 		try{
+			setLoading(true);
 			const {data:{user,token}}= await api.post('/users/',{name:names,email:emails,password:passwords})
 			setErr('n');
+			
 		}catch(e){
 			console.log(e);
 			setErr('s');
+		}
+		setLoading(false);
 		}
 	}
     useEffect(()=>{
@@ -122,7 +143,7 @@ const Login_mobile=()=>{
                     <input type="email" className={loginm.input} placeholder="Email" onChange={(e)=>setEmails(e.target.value)}/>
                     <input type="password" className={loginm.input} placeholder="Password" onChange={(e)=>setPasswords(e.target.value)}/>
                 </div>
-                {err==='s'?<Warning>Email or name duplicate!</Warning>:<></>}
+                <Warning>{alert[err]}</Warning>
                 <button className={loginm["submit-btn"]}>Sign up</button>
             </form>
             <form className={loginm.login+(inup?(" "+loginm["slide-up"]):"")} onSubmit={handlesubmitl}>

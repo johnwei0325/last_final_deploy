@@ -21,7 +21,7 @@ import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import { duration } from '@mui/material';
-
+import { useApp } from '../hook';
 const crowdedLabels = {
     1: 'Empty 車位很空',
     2: 'Plenty of spaces 仍有許多車位',
@@ -48,7 +48,7 @@ function MyBike () {
     const [successMessage, setSuccessMessage] = useState("")
     const [successOpen, setSuccessOpen] = React.useState(true);
     const [position, setPosition] = useState({lat: null, lng: null, time: null})
-
+    const {me}=useApp();
     React.useEffect(() => {
         navigator.geolocation.getCurrentPosition((position)=> {
             setPosition({lat: position.coords.latitude, lng: position.coords.longitude, time: new Date()})
@@ -177,7 +177,7 @@ function MyBike () {
         <Card sx={{ maxWidth: `calc(0.8*vw)`/*`calc(0.8*vw)`*/ ,  width: window.innerWidth > 410 ? "100%" : "95%", height: window.innerWidth > 410 ? "100%" : "92%"}}>
             <CardContent>
                 <Typography gutterBottom variant="h4" component="div" fontSize={window.innerWidth > 410 ? "50px" : "20px"}>
-                    {username}'s Bike
+                    {me.name}'s Bike
                 <Button onClick={ handleGetMyBike }> Refresh </Button>
                 </Typography>
             </CardContent>

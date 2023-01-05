@@ -136,7 +136,7 @@ const NearestStations = () => {
       >
         Distance: &nbsp; 
         <span style={{color: 'gray'}}> {`${Math.ceil(calcDist(position, stop.location)*1000)/1000} km`} </span>
-        &nbsp; &nbsp; &nbsp; &nbsp;
+        <br/>
         Spaces left: &nbsp;
         <LocationOnIcon sx={{color: densityToColor(stop.density), fontSize: device==='PC' ? 36 : 20}}/>
       </Typography>
@@ -153,6 +153,7 @@ const NearestStations = () => {
     >
       Distance: &nbsp; 
       <span style={{color: 'gray'}}> {`${Math.ceil(calcDist(position, stop.location)*1000)/1000} km`} </span>
+      <br></br>
       Spaces left: &nbsp;
       <LocationOnIcon sx={{color: densityToColor(stop.density), fontSize: device==='PC' ? 36 : 20}}/>
     </Typography>

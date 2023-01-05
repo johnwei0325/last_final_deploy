@@ -12,10 +12,7 @@ router.post('/users/', async (req, res) => {
         if(find){
           res.status(400).send("Duplicate email!");
         }else {
-          find=await UserModel.findOne({name:req.body.name});
-          if(find){
-             res.status(400).send('Duplicate name!');
-          }else{
+          
             try{const user = await UserModel.create(req.body)
             // 為該成功註冊之用戶產生 JWT
             const token = await user.generateAuthToken()
@@ -24,7 +21,7 @@ router.post('/users/', async (req, res) => {
             }catch (err) {
               res.status(400).send(err)
             }
-          } 
+          
         }
     
         
